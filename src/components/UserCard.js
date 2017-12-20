@@ -1,7 +1,10 @@
 import React from 'react';
 import Button from './elements/Button';
+import Alert from './elements/Alert'
+import Showable from './elements/Showable'
 
-const UserCard = ({ user }) => {
+const UserCard = ({ user, onDelete}) => {
+  console.log(user);
   const { first_name, last_name, avatar } = user;
 
   return (
@@ -16,7 +19,8 @@ const UserCard = ({ user }) => {
           {first_name} {last_name}
         </h4>
       </div>
-      <form>
+      <form className="container" onSubmit={onDelete}>
+        <input name='id' type="hidden" value={user.id} />
         <Button type="submit" color="danger">
           Delete User
         </Button>

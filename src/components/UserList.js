@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import UserCard from './UserCard';
 
-const UserList = ({ users, isFetching }) => {
-  const userList = users.map(user => <UserCard user={user} key={user.id} />);
+const UserList = ({ users, isFetching, onDelete }) => {
+  const userList = users.map(user => <UserCard user={user} onDelete={onDelete} key={user.id} />);
 
   return (
     <div className="container">

@@ -67,22 +67,56 @@ class AppContainer extends Component {
       });
   };
 
-  // onDeleteUser = e => {
-  //   e.preventDefault();
-  //   const form = e.target;
-  //   const headers = new Headers();
-  //   headers.append('Content-Type', 'application/json');
-  //   const options = {
-  //     headers,
-  //     method: 'DELETE'
-  //   };
-  //   this.setState({ isFetching: true });
-  // };
+  onDeleteUser = e => {
+    e.persist();
+    e.preventDefault();
+    console.log(e.target.id.value);
+    const userId = e.target.id.value;
+    const form = e.target;
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    const options = {
+      headers,
+      method: 'DELETE'
+    };
+    this.setState({ isFetching: true });
+    fetch(`https://reqres.in/api/users${userId}`, options)
+      .then(response => {
+        // If response not okay, throw an error
+        if (!response.ok) {
+          throw new Error(`${response.status} ${response.statusText}`);
+        }
+
+        // Otherwise, extract the response into json
+      })
+      .then(json => {
+        // Update the user list and isFetching.
+        // Reset the form in a callback after state is set.
+        this.state.users.splice(userId-1,1);
+        this.setState(
+          {
+            isFetching: false,
+            users: [...this.state.users]
+          },
+          () => {
+            form.reset();
+          }
+        );
+      })
+      .catch(error => {
+        // Set error in state & log to console
+        console.log(error);
+        this.setState({
+          isFetching: false,
+          error
+        });
+      });
+  };
 
   // Send our state and functions as props
   render() {
     const { users, isFetching, error } = this.state;
-    return <App onAddUser={this.onAddUser} {...this.state} />;
+    return <App onAddUser={this.onAddUser} onDeleteUser={this.onDeleteUser} {...this.state} />;
   }
 }
 
