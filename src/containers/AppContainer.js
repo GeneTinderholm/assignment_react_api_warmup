@@ -92,11 +92,16 @@ class AppContainer extends Component {
       .then(json => {
         // Update the user list and isFetching.
         // Reset the form in a callback after state is set.
-        this.state.users.splice(userId-1,1);
+        let userArray = [];
+        this.state.users.forEach(x => {
+          if(x.id != userId){
+            userArray.push(x);
+          }
+        })
         this.setState(
           {
             isFetching: false,
-            users: [...this.state.users]
+            users: [...userArray]
           },
           () => {
             form.reset();
