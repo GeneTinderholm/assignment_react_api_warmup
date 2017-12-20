@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from './elements/Button';
 
 const UserCard = ({ user }) => {
   const { first_name, last_name, avatar } = user;
@@ -15,6 +16,11 @@ const UserCard = ({ user }) => {
           {first_name} {last_name}
         </h4>
       </div>
+      <form>
+        <Button type="submit" color="danger">
+          Delete User
+        </Button>
+      </form>
     </div>
   );
 };
