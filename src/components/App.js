@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import logo from '../logo.svg';
 // import JumbotronFluid from './elements/JumbotronFluid';
 import UserList from './UserList';
+import UserForm from './UserForm';
+import serialize from 'form-serialize';
 
 class App extends Component {
   constructor() {
@@ -19,6 +21,13 @@ class App extends Component {
       .then(response => response.json())
       .then(json => this.setState({ users: json.data, isFetching: false }));
   }
+
+  onAddUser = e => {
+    e.preventDefault();
+    const form = e.target;
+    const body = serialize(form, { hash: true });
+    console.log(body);
+  };
 
   render() {
     const { users, isFetching } = this.state;
